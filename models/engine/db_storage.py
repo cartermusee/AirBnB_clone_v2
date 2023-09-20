@@ -32,16 +32,18 @@ class DBStorage():
     def all(self, cls=None):
         """create a session"""
         from models import base_model
+        class_obj = {}
         if cls is None:
             classes = [State, City, User, Place, Review, Amenity]
-            class_obj = []
-
             for cls in classes:
-                class_obj.extend(self.__session.query(cls).all())
+                objects = self.__session.query(cls).all()
+                for ob in objects:
+                    key = "{}.{}".format(type(ob).__name__, ob.id)
+                    class_obj[key] = ob
         else:
             if type(cls) == str:
                 cls = eval(cls)
-            class_obj = self.__session.query(cls)
+            class_obj = self.__session.query(cls).all()
         for obj in class_obj:
             object_dict['{}.{}'.format(type(obj).__name__, obj.id)] = obj
         return object_dict
