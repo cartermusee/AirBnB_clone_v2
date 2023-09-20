@@ -7,12 +7,12 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from models.user import User
 from models.state import State
 from models.city import City
-from models.city import Amenity
+from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
 
-class DbStorage():
+class DBStorage():
     """endine class"""
     __engine = None
     __session = None
@@ -20,30 +20,30 @@ class DbStorage():
     def __init__(self):
         """constructor"""
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
-                                      format(os.getnev("HBNB_MYSQL_USER"),
-                                             os.getnev("HBNB_MYSQL_PWD"),
+                                      format(os.getenv("HBNB_MYSQL_USER"),
+                                             os.getenv("HBNB_MYSQL_PWD"),
                                              os.getenv("HBNB_MYSQL_HOST"),
-                                             os.getnev("HBNB_MYSQL_DB")),
+                                             os.getenv("HBNB_MYSQL_DB")),
                                       pool_pre_ping=True)
 
-        if os.getnev("HBNB_ENV") == 'test':
+        if os.getenv("HBNB_ENV") == 'test':
             Base.metadata.drop_all(Bind=self.__engine)
 
     def all(self, cls=None):
         """create a session"""
         from models import base_model
         if cls is None:
-            classes = [User, State, City, Amenity, Place, Review]
-            objects = []
+            classes = [State, City, User, Place, Review, Amenity]
+            class_obj = []
+
             for cls in classes:
-                objects += self.__sesson.query(cls).all()
+                class_obj.extend(self.__session.query(cls).all())
         else:
-            results = self_session.query(cls).all()
-
-        object_dict = {}
-
-        for obj in results:
-            object_dict['{}.{}'.format(obj.__class__.__name__, obj.id)] = obj
+            if type(cls) == str:
+                cls = eval(cls)
+            class_obj = self.__session.query(cls)
+        for obj in class_obj:
+            object_dict['{}.{}'.format(type(obj).__name__, obj.id)] = obj
         return object_dict
 
     def new(self, obj):
