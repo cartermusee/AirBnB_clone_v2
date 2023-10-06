@@ -11,8 +11,8 @@ def do_pack():
 
     now = datetime.now()
     fm_date = now.strftime("%Y%m%d%H%M%S")
-    result = local("tar -czvf versions/web_static_{}.tgz web_static".\
-            format(fm_date))
+    result = local("tar -czvf versions/web_static_{}.tgz web_static".
+                   format(fm_date))
     if result.succeeded:
         return "versions/web_static_{}.tgz".format(fm_date)
     else:
