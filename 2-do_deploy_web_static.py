@@ -5,13 +5,13 @@ import os
 from datetime import datetime
 
 
+env.hosts = ['52.87.222.165', '54.237.12.4']
+env.user = 'ubuntu'
+env.key_filename = "~/.ssh/id_rsa"
 def do_deploy(archive_path):
     """
      Fabric script that generates a .tgz archive
     """
-    env.hosts = ['52.87.222.165', '54.237.12.4']
-    env.user = 'ubuntu'
-    env.key_filename = "~/.ssh/id_rsa"
 
     try:
         if not os.path.exists(archive_path):
@@ -31,3 +31,4 @@ def do_deploy(archive_path):
         return True
     except Exception as e:
         return False
+    return True
