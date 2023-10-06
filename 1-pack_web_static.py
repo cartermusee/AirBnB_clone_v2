@@ -10,12 +10,10 @@ def do_pack():
     local("mkdir -p version")
 
     now = datetime.now()
-    arch = "web_static_{}{}{}{}{}{}.tgz".\
-        format(now.year,
-               now.month,
-               now.day, now.hour, now.minute, now.second)
-    result = local("tar -cvzf version/{} web_static".format(arch))
+    fm_date = now.strftime("%Y%m%d%H%M%S")
+    result = local("tar -czvf version/web_static_{}.tgz web_static".\
+            format(fm_date))
     if result.succeeded:
-        return "version/{}".format(arch)
+        return "version/web_static_{}.tgz".format(fm_date)
     else:
         return None
