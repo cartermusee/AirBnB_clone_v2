@@ -9,13 +9,14 @@ def do_deploy(archive_path):
     """
      Fabric script that generates a .tgz archive
     """
-    env.user = 'ubuntu'
     env.hosts = ['52.87.222.165', '54.237.12.4']
-    env.key_filename = "~/.ssh/id_resa"
+    env.user = 'ubuntu'
+    env.key_filename = "~/.ssh/id_rsa"
 
-    if not os.path.exists(archive_path):
-        return False
     try:
+        if not os.path.exists(archive_path):
+            return False
+
         put(archive_path, "/tmp/")
 
         arch_file = os.path.basename(archive_path)
