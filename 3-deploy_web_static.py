@@ -1,13 +1,22 @@
 #!/usr/bin/python3
-"""to deplaoy"""
 from fabric.api import *
-import os
 from datetime import datetime
 
 
-env.user = 'ubuntu'
-env.hosts = ['52.87.222.165', '54.237.12.4']
-env.key_filename = "~/.ssh/id_rsa"
+def do_pack():
+    """
+     Fabric script that generates a .tgz archive
+    """
+    local("mkdir -p versions")
+
+    now = datetime.now()
+    fm_date = now.strftime("%Y%m%d%H%M%S")
+    result = local("tar -czvf versions/web_static_{}.tgz web_static".
+                   format(fm_date))
+    if result.succeeded:
+        return "versions/web_static_{}.tgz".format(fm_date)
+    else:
+        return None
 
 
 def do_deploy(archive_path):
@@ -32,3 +41,10 @@ def do_deploy(archive_path):
         return True
     except Exception as e:
         return False
+
+
+def deploy():
+    file = do_pack()
+    if file is None:
+        return False
+    return do_deploy(file)
