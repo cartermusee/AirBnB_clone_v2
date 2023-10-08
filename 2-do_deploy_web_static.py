@@ -21,10 +21,9 @@ def do_deploy(archive_path):
         run('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.
             format(os.path.basename(archive_path), filename))
         run("sudo rm  /tmp/{}".format(os.path.basename(archive_path)))
-        run("sudo mv /data/web_static/releases/{}/web_static/* \
-/data/web_static/releases/{}/".
-            format(filename, filename))
-        run("sudo rm -r /data/web_static/releases/{}/web_static".
+        run("mv /data/web_static/releases/{}/web_static/* /\
+data/web_static/releases/{}/".format(filename, filename))
+        run("sudo rm -rf /data/web_static/releases/{}/web_static".
             format(filename))
         run("sudo rm -rf data/web_static/current")
         run("sudo ln -s /data/web_static/releases/{}/ \
