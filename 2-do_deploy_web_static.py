@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 env.user = 'ubuntu'
-env.hosts = ['52.87.222.165', '54.237.12.4']
+env.hosts = ['54.237.12.4','52.87.222.165']
 env.key_filename = "~/.ssh/id_rsa"
 
 
@@ -30,8 +30,7 @@ def do_deploy(archive_path):
         run("sudo rm -rf /data/web_static/releases/{}/web_static".
             format(filename))
         run("sudo rm -rf data/web_static/current")
-        if not exists("/data/web_static/current"):
-            run("sudo ln -s /data/web_static/releases/{}/ \
+        run("sudo ln -s /data/web_static/releases/{}/ \
 /data/web_static/current".format(filename))
         return True
     except Exception as e:
