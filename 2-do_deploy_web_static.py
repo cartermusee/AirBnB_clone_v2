@@ -11,6 +11,10 @@ env.key_filename = "~/.ssh/id_rsa"
 
 
 def do_deploy(archive_path):
+    """finction deploy
+    arg:
+        archive_path:the path
+    """
     try:
         if not os.path.exists(archive_path):
             return False
@@ -21,8 +25,8 @@ def do_deploy(archive_path):
         run('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.
             format(os.path.basename(archive_path), filename))
         run("sudo rm  /tmp/{}".format(os.path.basename(archive_path)))
-        run("mv /data/web_static/releases/{}/web_static/* /\
-data/web_static/releases/{}/".format(filename, filename))
+        run("mv /data/web_static/releases/{}/web_static/* \
+/data/web_static/releases/{}/".format(filename, filename))
         run("sudo rm -rf /data/web_static/releases/{}/web_static".
             format(filename))
         run("sudo rm -rf data/web_static/current")
