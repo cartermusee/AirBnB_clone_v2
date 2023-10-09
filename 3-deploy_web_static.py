@@ -41,10 +41,9 @@ def do_deploy(archive_path):
 /data/web_static/releases/{}/".format(filename, filename))
         run("sudo rm -rf /data/web_static/releases/{}/web_static".
             format(filename))
-        run("sudo rm -rf data/web_static/current")
+        run("sudo rm -rf /data/web_static/current")
         run("sudo ln -s /data/web_static/releases/{}/ \
 /data/web_static/current".format(filename))
-        run("echo New version deployed!")
         return True
     except Exception as e:
         return False
