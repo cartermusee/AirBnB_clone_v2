@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""module for deploy"""
 from fabric.api import *
 from datetime import datetime
 
