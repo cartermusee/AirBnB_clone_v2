@@ -7,11 +7,11 @@
 	{% if mode == 'all' %}
 		<H1>States</H1>
 	    	<UL>
-      		{% for state in states %}
+      		{% for state in states.values()|sort(attribute='name') %}
       			<LI>{{ state.id }}: <b>{{ state.name }}</b></LI>
       		{% endfor %}
 	    	</UL>
-	{% eLIf mode == 'id' %}
+	{% elif mode == 'id' %}
 		<H1>State: {{ states.name }}</H1>
 		<h3>Cities:</h3>
 		<UL>

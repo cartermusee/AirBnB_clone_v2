@@ -9,15 +9,14 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close_st(exception):
+def close_st(self):
     storage.close()
 
 
 @app.route("/states", strict_slashes=False)
 def states():
-    states = storage.all("State")
-    sortedd = sorted(states.values(), key=lambda state: state.name)
-    return render_template("9-states.html", states=sortedd)
+    states = storage.all(State)
+    return render_template("9-states.html", states=states, mode='all')
 
 
 @app.route("/states/<id>", strict_slashes=False)
