@@ -17,7 +17,7 @@ def close_st(exception):
 def states():
     states = storage.all("State")
     sortedd = sorted(states.values(), key=lambda state: state.name)
-    return render_template("7-states_list.html", states=sortedd)
+    return render_template("9-states.html", states=sortedd)
 
 
 @app.route("/states/<id>", strict_slashes=False)
